@@ -8,4 +8,9 @@ abstract final class Routes {
 
   static const String settings = '/settings';
   static const String settingsName = 'settings';
+
+  static const String faceCaptureGuideName = 'faceCaptureGuide';
+  static const String faceCaptureLiveName = 'faceCaptureLive';
+  static const String faceCaptureResultName = 'faceCaptureResult';
+  static const String faceCaptureAnalyzeName = 'faceCaptureAnalyze';
 }

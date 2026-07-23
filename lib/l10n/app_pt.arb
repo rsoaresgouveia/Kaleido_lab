@@ -12,5 +12,60 @@
   "themeModeDark": "Escuro",
   "languageSystem": "Padrão do sistema",
   "languageEnglish": "Inglês",
-  "languagePortuguese": "Português (Brasil)"
+  "languagePortuguese": "Português (Brasil)",
+
+  "featureFaceCaptureTitle": "Captura de rosto",
+  "featureFaceCaptureSubtitle": "Foto estilo documento com verificação ao vivo",
+
+  "faceGuideTitle": "Antes de começar",
+  "faceGuideIntro": "Para uma captura válida, siga estas orientações:",
+  "faceGuideFrontal": "Fique de frente para a câmera",
+  "faceGuideNeutral": "Mantenha uma expressão neutra",
+  "faceGuideEyes": "Mantenha os dois olhos abertos",
+  "faceGuideAccessories": "Remova óculos, chapéus e acessórios",
+  "faceGuideLighting": "Procure uma luz uniforme e clara",
+  "faceGuideAccessoriesNote": "Acessórios e iluminação só são detectados em parte — remova os acessórios você mesmo.",
+  "faceGuideStartCamera": "Abrir câmera",
+  "faceGuideAnalyzePhoto": "Analisar uma foto",
+
+  "faceCaptureTitle": "Posicione seu rosto",
+  "faceCaptureHoldSteady": "Fique parado…",
+  "faceCameraPermissionDenied": "É necessária permissão de câmera para capturar.",
+  "faceCameraError": "Não foi possível iniciar a câmera.",
+  "faceCaptureRetry": "Tentar de novo",
+
+  "hintReady": "Perfeito — fique parado",
+  "hintNoFace": "Mostre seu rosto no quadro",
+  "hintMultipleFaces": "Apenas um rosto deve aparecer",
+  "hintMoveCloser": "Aproxime-se um pouco",
+  "hintMoveAway": "Afaste-se um pouco",
+  "hintCenterFace": "Centralize o rosto no quadro",
+  "hintFaceForward": "Olhe direto para a câmera",
+  "hintOpenEyes": "Mantenha os dois olhos abertos",
+  "hintNeutralExpression": "Relaxe a expressão",
+  "hintTooDark": "Procure um lugar mais claro",
+  "hintTooBright": "Reduza a luz",
+
+  "checkSingleFace": "Um rosto",
+  "checkFraming": "Enquadramento",
+  "checkFrontal": "De frente",
+  "checkEyesOpen": "Olhos abertos",
+  "checkNeutralExpression": "Expressão neutra",
+  "checkLighting": "Iluminação",
+
+  "resultTitle": "Revisão",
+  "resultCompliant": "Está ótimo",
+  "resultNotCompliant": "Algumas verificações falharam",
+  "resultRetake": "Refazer",
+  "resultConfirm": "Usar esta foto",
+  "resultConfirmed": "Foto confirmada",
+
+  "analyzeTitle": "Analisar uma foto",
+  "analyzePick": "Escolher uma foto",
+  "analyzeEmpty": "Escolha uma foto para verificar com as regras.",
+  "analyzeAnother": "Escolher outra",
+  "analyzing": "Analisando…",
+  "analyzeNoFace": "Nenhum rosto encontrado nesta foto.",
+
+  "checksPassedCount": "{passed} de {total} verificações"
 }
