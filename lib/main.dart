@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(const KaleidoLabApp());
+import 'app/app.dart';
+import 'features/settings/presentation/providers/settings_providers.dart';
 
-/// Minimal application shell. Replaced as the real architecture lands.
-class KaleidoLabApp extends StatelessWidget {
-  const KaleidoLabApp({super.key});
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Kaleido Lab',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: Text('Kaleido Lab'))),
-    );
-  }
+  // Load persisted preferences once, up front, so the first frame already
+  // reflects the user's saved theme and language.
+  final preferences = await SharedPreferences.getInstance();
+
+  runApp(
+    ProviderScope(
+      overrides: [sharedPreferencesProvider.overrideWithValue(preferences)],
+      child: const KaleidoApp(),
+    ),
+  );
 }
