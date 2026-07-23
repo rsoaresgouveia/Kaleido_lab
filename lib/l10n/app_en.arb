@@ -1,0 +1,55 @@
+{
+  "@@locale": "en",
+  "appTitle": "Kaleido Lab",
+  "@appTitle": {
+    "description": "The application name, shown in the home app bar."
+  },
+  "homeEmptyStateTitle": "No features yet",
+  "@homeEmptyStateTitle": {
+    "description": "Title of the empty state shown on the home gallery."
+  },
+  "homeEmptyStateMessage": "Features you build will show up here.",
+  "@homeEmptyStateMessage": {
+    "description": "Supporting message of the home empty state."
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Title of the settings page."
+  },
+  "settingsAppearanceSection": "Appearance",
+  "@settingsAppearanceSection": {
+    "description": "Header for the appearance section of settings."
+  },
+  "settingsThemeLabel": "Theme",
+  "@settingsThemeLabel": {
+    "description": "Label for the theme selector."
+  },
+  "settingsLanguageSection": "Language",
+  "@settingsLanguageSection": {
+    "description": "Header for the language section of settings."
+  },
+  "themeModeSystem": "System",
+  "@themeModeSystem": {
+    "description": "Theme option that follows the device setting."
+  },
+  "themeModeLight": "Light",
+  "@themeModeLight": {
+    "description": "Light theme option."
+  },
+  "themeModeDark": "Dark",
+  "@themeModeDark": {
+    "description": "Dark theme option."
+  },
+  "languageSystem": "System default",
+  "@languageSystem": {
+    "description": "Language option that follows the device setting."
+  },
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "English language option."
+  },
+  "languagePortuguese": "Portuguese (Brazil)",
+  "@languagePortuguese": {
+    "description": "Brazilian Portuguese language option."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "@@locale": "pt",
+  "appTitle": "Kaleido Lab",
+  "homeEmptyStateTitle": "Nenhuma funcionalidade ainda",
+  "homeEmptyStateMessage": "As funcionalidades que você criar aparecerão aqui.",
+  "settingsTitle": "Configurações",
+  "settingsAppearanceSection": "Aparência",
+  "settingsThemeLabel": "Tema",
+  "settingsLanguageSection": "Idioma",
+  "themeModeSystem": "Sistema",
+  "themeModeLight": "Claro",
+  "themeModeDark": "Escuro",
+  "languageSystem": "Padrão do sistema",
+  "languageEnglish": "Inglês",
+  "languagePortuguese": "Português (Brasil)"
+}
