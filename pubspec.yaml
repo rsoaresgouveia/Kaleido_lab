@@ -1,7 +1,7 @@
 name: kaleido_lab
 description: "A Flutter playground app for building and trying out isolated UI and platform features."
 publish_to: 'none'
-version: 0.1.1+2
+version: 0.2.0+3
 
 environment:
   sdk: ^3.10.7
@@ -16,6 +16,9 @@ dependencies:
   flutter_riverpod: ^3.3.2
   go_router: ^17.3.0
   shared_preferences: ^2.5.5
+  google_mlkit_face_detection: ^0.14.0
+  camera: ^0.12.0+2
+  image_picker: ^1.2.3
 
 dev_dependencies:
   flutter_test:

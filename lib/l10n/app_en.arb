@@ -13,43 +13,74 @@
     "description": "Supporting message of the home empty state."
   },
   "settingsTitle": "Settings",
-  "@settingsTitle": {
-    "description": "Title of the settings page."
-  },
   "settingsAppearanceSection": "Appearance",
-  "@settingsAppearanceSection": {
-    "description": "Header for the appearance section of settings."
-  },
   "settingsThemeLabel": "Theme",
-  "@settingsThemeLabel": {
-    "description": "Label for the theme selector."
-  },
   "settingsLanguageSection": "Language",
-  "@settingsLanguageSection": {
-    "description": "Header for the language section of settings."
-  },
   "themeModeSystem": "System",
-  "@themeModeSystem": {
-    "description": "Theme option that follows the device setting."
-  },
   "themeModeLight": "Light",
-  "@themeModeLight": {
-    "description": "Light theme option."
-  },
   "themeModeDark": "Dark",
-  "@themeModeDark": {
-    "description": "Dark theme option."
-  },
   "languageSystem": "System default",
-  "@languageSystem": {
-    "description": "Language option that follows the device setting."
-  },
   "languageEnglish": "English",
-  "@languageEnglish": {
-    "description": "English language option."
-  },
   "languagePortuguese": "Portuguese (Brazil)",
-  "@languagePortuguese": {
-    "description": "Brazilian Portuguese language option."
+
+  "featureFaceCaptureTitle": "Face capture",
+  "featureFaceCaptureSubtitle": "Guided ID-style photo with live checks",
+
+  "faceGuideTitle": "Before you start",
+  "faceGuideIntro": "For a valid capture, follow these guidelines:",
+  "faceGuideFrontal": "Face the camera straight on",
+  "faceGuideNeutral": "Keep a neutral expression",
+  "faceGuideEyes": "Keep both eyes open",
+  "faceGuideAccessories": "Remove glasses, hats and accessories",
+  "faceGuideLighting": "Find even, bright lighting",
+  "faceGuideAccessoriesNote": "Accessories and lighting can only be partly detected — please remove accessories yourself.",
+  "faceGuideStartCamera": "Open camera",
+  "faceGuideAnalyzePhoto": "Analyze a photo instead",
+
+  "faceCaptureTitle": "Position your face",
+  "faceCaptureHoldSteady": "Hold still…",
+  "faceCameraPermissionDenied": "Camera permission is required to capture.",
+  "faceCameraError": "Couldn't start the camera.",
+  "faceCaptureRetry": "Try again",
+
+  "hintReady": "Perfect — hold still",
+  "hintNoFace": "Show your face in the frame",
+  "hintMultipleFaces": "Only one face should be visible",
+  "hintMoveCloser": "Move a little closer",
+  "hintMoveAway": "Move a little farther away",
+  "hintCenterFace": "Center your face in the frame",
+  "hintFaceForward": "Look straight at the camera",
+  "hintOpenEyes": "Keep both eyes open",
+  "hintNeutralExpression": "Relax your expression",
+  "hintTooDark": "Find brighter lighting",
+  "hintTooBright": "Reduce the lighting",
+
+  "checkSingleFace": "Single face",
+  "checkFraming": "Framing",
+  "checkFrontal": "Facing forward",
+  "checkEyesOpen": "Eyes open",
+  "checkNeutralExpression": "Neutral expression",
+  "checkLighting": "Lighting",
+
+  "resultTitle": "Review",
+  "resultCompliant": "Looks good",
+  "resultNotCompliant": "Some checks didn't pass",
+  "resultRetake": "Retake",
+  "resultConfirm": "Use this photo",
+  "resultConfirmed": "Photo confirmed",
+
+  "analyzeTitle": "Analyze a photo",
+  "analyzePick": "Choose a photo",
+  "analyzeEmpty": "Pick a photo to check it against the rules.",
+  "analyzeAnother": "Choose another",
+  "analyzing": "Analyzing…",
+  "analyzeNoFace": "No face found in this photo.",
+
+  "checksPassedCount": "{passed} of {total} checks passed",
+  "@checksPassedCount": {
+    "placeholders": {
+      "passed": { "type": "int" },
+      "total": { "type": "int" }
+    }
   }
 }

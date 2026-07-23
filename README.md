@@ -35,8 +35,11 @@ feature demos plug into that foundation.
 
 ## Features
 
-- **Gallery home** — a single entry point that will list every feature demo
-  (currently empty by design; demos are added incrementally).
+- **Face capture** — a guided, ID-style capture flow (the first feature study).
+  Live front-camera detection with an animated alignment frame, real-time
+  guidance, and automatic capture once the shot is compliant. See
+  [Feature study: face capture](#feature-study-face-capture).
+- **Gallery home** — a single entry point that lists the available feature demos.
 - **Theming** — Material 3 light/dark themes derived from one seed color, with a
   System / Light / Dark switch.
 - **Internationalization** — English and Brazilian Portuguese, backed by ARB
@@ -52,6 +55,8 @@ feature demos plug into that foundation.
 - **Routing:** go_router
 - **Localization:** `flutter_localizations` + `gen_l10n` (ARB)
 - **Persistence:** shared_preferences
+- **On-device ML:** `google_mlkit_face_detection`
+- **Camera & media:** `camera`, `image_picker`
 - **Testing:** flutter test
 - **CI:** GitHub Actions
 
@@ -115,9 +120,34 @@ flutter analyze
 flutter test
 ```
 
+## Feature study: face capture
+
+A guided flow that produces an ID-style portrait and checks it on-device with
+ML Kit face detection. It has three screens — a **guide**, a **live camera**
+with an animated alignment frame that turns green and auto-captures after a
+short hold, and a **review** of the result. A camera-free **"analyze a photo"**
+mode runs the same rules on an image from the gallery.
+
+Rules evaluated by the pure `FaceComplianceEvaluator` (fully unit-tested):
+
+| Check | Signal used |
+|-------|-------------|
+| Single face | detected face count |
+| Framing | face-box size and distance from center |
+| Facing forward | head Euler angles (yaw / pitch / roll) |
+| Eyes open | left/right eye-open probability |
+| Neutral expression | smiling probability |
+| Lighting | average frame luminance |
+
+**Known limitations.** ML Kit does not classify accessories (glasses, hats), so
+"remove accessories" is guidance in the on-screen guide rather than an automated
+check. Lighting is approximated from frame luminance. The **live camera needs a
+physical device** — the iOS Simulator has no camera; use the "analyze a photo"
+mode to exercise the flow without one.
+
 ## Roadmap
 
-- [ ] Add the first feature demo and surface it on the gallery home.
+- [x] Add the first feature demo (face capture) and surface it on the home gallery.
 - [ ] Grow the gallery with additional self-contained feature demos.
 - [ ] Add golden tests for the shared theme.
 

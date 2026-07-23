@@ -16,12 +16,14 @@ Future<Widget> _bootApp() async {
 }
 
 void main() {
-  testWidgets('home renders the app title and the empty state', (tester) async {
+  testWidgets('home renders the app title and the feature gallery', (
+    tester,
+  ) async {
     await tester.pumpWidget(await _bootApp());
     await tester.pumpAndSettle();
 
     expect(find.text('Kaleido Lab'), findsOneWidget);
-    expect(find.text('No features yet'), findsOneWidget);
+    expect(find.text('Face capture'), findsOneWidget);
     expect(find.byIcon(Icons.settings_outlined), findsOneWidget);
   });
 
