@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file. The format is
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-07-24
+
+### Changed
+
+- Adopt Flutter 3.44.8 (Dart 3.12), pinned per-project with FVM (`.fvmrc`). CI
+  now builds against the same version.
+
 ## [0.2.1] - 2026-07-23
 
 ### Fixed
@@ -46,6 +53,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Gallery home screen (empty, ready to host feature demos).
 - Unit and widget tests, plus a GitHub Actions CI workflow.
 
+[0.2.2]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.2
 [0.2.1]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.1
 [0.2.0]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.0
 [0.1.1]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.1.1
