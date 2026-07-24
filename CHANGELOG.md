@@ -4,6 +4,14 @@ All notable changes to this project are documented in this file. The format is
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-07-23
+
+### Fixed
+
+- iOS build with ML Kit: link CocoaPods statically (`use_frameworks! :linkage =>
+  :static`) and raise the deployment target to 15.5, resolving the
+  `Module 'camera_avfoundation' not found` error when building for a device.
+
 ## [0.2.0] - 2026-07-23
 
 ### Added
@@ -38,6 +46,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Gallery home screen (empty, ready to host feature demos).
 - Unit and widget tests, plus a GitHub Actions CI workflow.
 
+[0.2.1]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.1
 [0.2.0]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.0
 [0.1.1]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.1.1
 [0.1.0]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.1.0
