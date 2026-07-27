@@ -11,7 +11,6 @@ class ComplianceThresholds {
     this.minEyeOpenProbability = 0.4,
     this.minFaceWidthRatio = 0.30,
     this.maxFaceWidthRatio = 0.80,
-    this.maxCenterOffset = 0.18,
     this.minLuminance = 60,
     this.maxLuminance = 235,
   });
@@ -28,9 +27,6 @@ class ComplianceThresholds {
   /// Acceptable face-width band (fraction of the image width).
   final double minFaceWidthRatio;
   final double maxFaceWidthRatio;
-
-  /// Max normalized distance of the face center from the image center.
-  final double maxCenterOffset;
 
   /// Acceptable average brightness band, in `0..255`.
   final double minLuminance;
@@ -88,17 +84,12 @@ class FaceComplianceEvaluator {
     );
   }
 
+  /// Framing is judged by face size only: reliable cross-platform centering from
+  /// ML Kit's box would need per-device preview-coordinate calibration, so the
+  /// user aligns their face in the on-screen oval instead.
   CheckResult _framing(FaceSample s) {
     final width = s.faceWidthRatio;
-    final offset = s.faceCenterOffset;
-    if (width == null || offset == null) {
-      return const CheckResult(
-        ComplianceCheck.framing,
-        false,
-        ComplianceHint.centerFace,
-      );
-    }
-    if (width < thresholds.minFaceWidthRatio) {
+    if (width == null || width < thresholds.minFaceWidthRatio) {
       return const CheckResult(
         ComplianceCheck.framing,
         false,
@@ -110,13 +101,6 @@ class FaceComplianceEvaluator {
         ComplianceCheck.framing,
         false,
         ComplianceHint.moveAway,
-      );
-    }
-    if (offset > thresholds.maxCenterOffset) {
-      return const CheckResult(
-        ComplianceCheck.framing,
-        false,
-        ComplianceHint.centerFace,
       );
     }
     return const CheckResult(ComplianceCheck.framing, true);
