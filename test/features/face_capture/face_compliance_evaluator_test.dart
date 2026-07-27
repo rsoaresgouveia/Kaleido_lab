@@ -13,7 +13,7 @@ FaceSample compliantSample({
   double smiling = 0.05,
   double leftEye = 0.9,
   double rightEye = 0.92,
-  double width = 0.5,
+  double width = 0.42,
   double centerOffset = 0.04,
   double luminance = 140,
 }) {
@@ -70,6 +70,12 @@ void main() {
       final report = evaluator.evaluate(compliantSample(width: 0.9));
       expect(report.isPassed(ComplianceCheck.framing), isFalse);
       expect(report.primaryHint, ComplianceHint.moveAway);
+    });
+
+    test('a face far from the target asks the user to center it', () {
+      final report = evaluator.evaluate(compliantSample(centerOffset: 0.3));
+      expect(report.isPassed(ComplianceCheck.framing), isFalse);
+      expect(report.primaryHint, ComplianceHint.centerFace);
     });
   });
 

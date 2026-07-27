@@ -9,8 +9,9 @@ class ComplianceThresholds {
     this.maxHeadAngleDegrees = 12,
     this.maxSmilingProbability = 0.2,
     this.minEyeOpenProbability = 0.4,
-    this.minFaceWidthRatio = 0.30,
-    this.maxFaceWidthRatio = 0.80,
+    this.minFaceWidthRatio = 0.33,
+    this.maxFaceWidthRatio = 0.50,
+    this.maxCenterOffset = 0.16,
     this.minLuminance = 60,
     this.maxLuminance = 235,
   });
@@ -28,11 +29,30 @@ class ComplianceThresholds {
   final double minFaceWidthRatio;
   final double maxFaceWidthRatio;
 
+  /// Max distance of the face center from the calibrated target (normalized).
+  final double maxCenterOffset;
+
   /// Acceptable average brightness band, in `0..255`.
   final double minLuminance;
   final double maxLuminance;
 
-  static const ComplianceThresholds standard = ComplianceThresholds();
+  /// Live-preview guidance: lenient size, and positional centering disabled
+  /// (camera-stream coordinates are not reliable across devices). The user
+  /// aligns visually in the oval; acceptance is decided on the captured still.
+  static const ComplianceThresholds live = ComplianceThresholds(
+    minFaceWidthRatio: 0.22,
+    maxFaceWidthRatio: 0.90,
+    maxCenterOffset: 10,
+  );
+
+  /// Still-photo gate (authoritative). Strict and reliable because a captured,
+  /// upright image has well-behaved coordinates on every device — this is what
+  /// decides whether the photo may be sent to the backend.
+  static const ComplianceThresholds still = ComplianceThresholds(
+    minFaceWidthRatio: 0.30,
+    maxFaceWidthRatio: 0.75,
+    maxCenterOffset: 0.16,
+  );
 }
 
 /// Pure, deterministic evaluation of a [FaceSample] against the [ComplianceThresholds].
@@ -40,9 +60,7 @@ class ComplianceThresholds {
 /// Has no dependency on ML Kit, the camera, or Flutter, which keeps every rule
 /// exhaustively unit-testable.
 class FaceComplianceEvaluator {
-  const FaceComplianceEvaluator([
-    this.thresholds = ComplianceThresholds.standard,
-  ]);
+  const FaceComplianceEvaluator([this.thresholds = ComplianceThresholds.still]);
 
   final ComplianceThresholds thresholds;
 
@@ -84,11 +102,13 @@ class FaceComplianceEvaluator {
     );
   }
 
-  /// Framing is judged by face size only: reliable cross-platform centering from
-  /// ML Kit's box would need per-device preview-coordinate calibration, so the
-  /// user aligns their face in the on-screen oval instead.
+  /// Framing checks the face is at a good distance (size) and centered. With the
+  /// live profile [ComplianceThresholds.maxCenterOffset] is large enough to
+  /// disable the centering test (camera-stream coordinates are unreliable); the
+  /// still profile enforces it against the reliable upright-image center.
   CheckResult _framing(FaceSample s) {
     final width = s.faceWidthRatio;
+    final offset = s.faceCenterOffset;
     if (width == null || width < thresholds.minFaceWidthRatio) {
       return const CheckResult(
         ComplianceCheck.framing,
@@ -101,6 +121,13 @@ class FaceComplianceEvaluator {
         ComplianceCheck.framing,
         false,
         ComplianceHint.moveAway,
+      );
+    }
+    if (offset == null || offset > thresholds.maxCenterOffset) {
+      return const CheckResult(
+        ComplianceCheck.framing,
+        false,
+        ComplianceHint.centerFace,
       );
     }
     return const CheckResult(ComplianceCheck.framing, true);

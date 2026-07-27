@@ -14,9 +14,10 @@ import '../providers/face_capture_providers.dart';
 import '../widgets/compliance_hint_banner.dart';
 import '../widgets/face_frame_overlay.dart';
 
-/// Live front-camera capture. Each frame is run through ML Kit and the rules
-/// engine; when every rule holds for [_holdDuration], the photo is taken
-/// automatically and the user is sent to review it.
+/// Live front-camera capture. Each frame is run through ML Kit and the *lenient*
+/// live rules purely to guide the user; once compliant for the hold duration a
+/// manual shutter appears. The authoritative decision is made later, on the
+/// captured still (see [CaptureResultPage]).
 class LiveCapturePage extends ConsumerStatefulWidget {
   const LiveCapturePage({super.key});
 
@@ -153,7 +154,7 @@ class _LiveCapturePageState extends ConsumerState<LiveCapturePage>
             deviceOrientation: controller.value.deviceOrientation,
             lensDirection: description.lensDirection,
           );
-      final report = ref.read(faceComplianceEvaluatorProvider).evaluate(sample);
+      final report = ref.read(liveComplianceEvaluatorProvider).evaluate(sample);
       if (mounted) setState(() => _report = report);
     } catch (_) {
       // Drop the frame; the next one will be processed.
