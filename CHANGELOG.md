@@ -4,6 +4,24 @@ All notable changes to this project are documented in this file. The format is
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.4] - 2026-07-27
+
+### Added
+
+- Manual shutter: once the capture is compliant for ~1.5s, a "Take photo" button
+  appears instead of auto-capturing.
+
+### Fixed
+
+- Captured/gallery photos are now detected regardless of EXIF orientation (the
+  front-camera JPEG previously came in rotated and was reported as "no face").
+
+### Changed
+
+- Framing is judged by face size only; on-device centering from ML Kit's box
+  proved unreliable without per-device preview-coordinate calibration, so the
+  user aligns their face in the on-screen oval instead.
+
 ## [0.2.3] - 2026-07-24
 
 ### Added
@@ -69,6 +87,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Gallery home screen (empty, ready to host feature demos).
 - Unit and widget tests, plus a GitHub Actions CI workflow.
 
+[0.2.4]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.4
 [0.2.3]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.3
 [0.2.2]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.2
 [0.2.1]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.1
