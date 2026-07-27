@@ -15,6 +15,8 @@ FaceSample compliantSample({
   double rightEye = 0.92,
   double width = 0.42,
   double centerOffset = 0.04,
+  double widthPx = 300,
+  double margin = 0.2,
   double luminance = 140,
 }) {
   return FaceSample(
@@ -27,6 +29,8 @@ FaceSample compliantSample({
     rightEyeOpenProbability: rightEye,
     faceWidthRatio: width,
     faceCenterOffset: centerOffset,
+    faceWidthPx: widthPx,
+    faceMargin: margin,
     luminance: luminance,
   );
 }
@@ -76,6 +80,18 @@ void main() {
       final report = evaluator.evaluate(compliantSample(centerOffset: 0.3));
       expect(report.isPassed(ComplianceCheck.framing), isFalse);
       expect(report.primaryHint, ComplianceHint.centerFace);
+    });
+
+    test('a face below the pixel minimum asks the user to move closer', () {
+      final report = evaluator.evaluate(compliantSample(widthPx: 120));
+      expect(report.isPassed(ComplianceCheck.framing), isFalse);
+      expect(report.primaryHint, ComplianceHint.moveCloser);
+    });
+
+    test('too little margin around the face asks the user to move away', () {
+      final report = evaluator.evaluate(compliantSample(margin: 0.05));
+      expect(report.isPassed(ComplianceCheck.framing), isFalse);
+      expect(report.primaryHint, ComplianceHint.moveAway);
     });
   });
 

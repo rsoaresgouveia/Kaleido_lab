@@ -12,6 +12,8 @@ class ComplianceThresholds {
     this.minFaceWidthRatio = 0.33,
     this.maxFaceWidthRatio = 0.50,
     this.maxCenterOffset = 0.16,
+    this.minFaceWidthPx = 0,
+    this.minMargin = 0,
     this.minLuminance = 60,
     this.maxLuminance = 235,
   });
@@ -31,6 +33,13 @@ class ComplianceThresholds {
 
   /// Max distance of the face center from the calibrated target (normalized).
   final double maxCenterOffset;
+
+  /// Minimum face width in pixels (recognition needs enough face detail).
+  final double minFaceWidthPx;
+
+  /// Minimum margin between the face and every image edge, as a fraction of the
+  /// side — so the whole face is comfortably inside the frame.
+  final double minMargin;
 
   /// Acceptable average brightness band, in `0..255`.
   final double minLuminance;
@@ -52,6 +61,8 @@ class ComplianceThresholds {
     minFaceWidthRatio: 0.30,
     maxFaceWidthRatio: 0.75,
     maxCenterOffset: 0.16,
+    minFaceWidthPx: 160,
+    minMargin: 0.10,
   );
 }
 
@@ -109,19 +120,30 @@ class FaceComplianceEvaluator {
   CheckResult _framing(FaceSample s) {
     final width = s.faceWidthRatio;
     final offset = s.faceCenterOffset;
-    if (width == null || width < thresholds.minFaceWidthRatio) {
-      return const CheckResult(
-        ComplianceCheck.framing,
-        false,
-        ComplianceHint.moveCloser,
-      );
+    final widthPx = s.faceWidthPx;
+    final margin = s.faceMargin;
+
+    const tooSmall = CheckResult(
+      ComplianceCheck.framing,
+      false,
+      ComplianceHint.moveCloser,
+    );
+    const tooBig = CheckResult(
+      ComplianceCheck.framing,
+      false,
+      ComplianceHint.moveAway,
+    );
+
+    if (width == null || width < thresholds.minFaceWidthRatio) return tooSmall;
+    if (thresholds.minFaceWidthPx > 0 &&
+        (widthPx == null || widthPx < thresholds.minFaceWidthPx)) {
+      return tooSmall;
     }
-    if (width > thresholds.maxFaceWidthRatio) {
-      return const CheckResult(
-        ComplianceCheck.framing,
-        false,
-        ComplianceHint.moveAway,
-      );
+    if (width > thresholds.maxFaceWidthRatio) return tooBig;
+    // Too little margin means the face is cropped/too close to an edge.
+    if (thresholds.minMargin > 0 &&
+        (margin == null || margin < thresholds.minMargin)) {
+      return tooBig;
     }
     if (offset == null || offset > thresholds.maxCenterOffset) {
       return const CheckResult(

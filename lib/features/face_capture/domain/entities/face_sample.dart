@@ -17,6 +17,8 @@ class FaceSample {
     this.rightEyeOpenProbability,
     this.faceWidthRatio,
     this.faceCenterOffset,
+    this.faceWidthPx,
+    this.faceMargin,
     this.luminance,
   });
 
@@ -31,6 +33,8 @@ class FaceSample {
       rightEyeOpenProbability = null,
       faceWidthRatio = null,
       faceCenterOffset = null,
+      faceWidthPx = null,
+      faceMargin = null,
       luminance = null;
 
   /// Total number of faces detected in the frame.
@@ -60,6 +64,13 @@ class FaceSample {
   /// Distance of the face-box center from the image center, normalized by the
   /// image width (`0` = perfectly centered).
   final double? faceCenterOffset;
+
+  /// Face bounding-box width in pixels (used for the recognition minimum).
+  final double? faceWidthPx;
+
+  /// Smallest gap between the face box and any image edge, as a fraction of that
+  /// side (`>= 0.10` means at least a 10% margin all around).
+  final double? faceMargin;
 
   /// Average brightness of the face region, in `0..255`.
   final double? luminance;
