@@ -30,6 +30,7 @@
 
   "faceCaptureTitle": "Posicione seu rosto",
   "faceCaptureHoldSteady": "Fique parado…",
+  "faceCaptureTakePhoto": "Tirar foto",
   "faceCameraPermissionDenied": "É necessária permissão de câmera para capturar.",
   "faceCameraError": "Não foi possível iniciar a câmera.",
   "faceCaptureRetry": "Tentar de novo",
