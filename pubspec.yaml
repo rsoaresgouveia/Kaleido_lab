@@ -1,7 +1,7 @@
 name: kaleido_lab
 description: "A Flutter playground app for building and trying out isolated UI and platform features."
 publish_to: 'none'
-version: 0.2.4+7
+version: 0.3.0+8
 
 environment:
   sdk: ^3.12.0
