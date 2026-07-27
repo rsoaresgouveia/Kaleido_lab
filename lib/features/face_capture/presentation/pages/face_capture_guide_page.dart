@@ -25,25 +25,19 @@ class FaceCaptureGuidePage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 16),
+            _Guideline(icon: Icons.straighten, text: l10n.faceGuideDistance),
             _Guideline(
               icon: Icons.center_focus_strong,
               text: l10n.faceGuideFrontal,
             ),
             _Guideline(
-              icon: Icons.sentiment_neutral,
-              text: l10n.faceGuideNeutral,
+              icon: Icons.wb_sunny_outlined,
+              text: l10n.faceGuideLighting,
             ),
-            _Guideline(
-              icon: Icons.remove_red_eye_outlined,
-              text: l10n.faceGuideEyes,
-            ),
+            _Guideline(icon: Icons.wallpaper, text: l10n.faceGuideBackground),
             _Guideline(
               icon: Icons.no_accounts,
               text: l10n.faceGuideAccessories,
-            ),
-            _Guideline(
-              icon: Icons.wb_sunny_outlined,
-              text: l10n.faceGuideLighting,
             ),
             const SizedBox(height: 16),
             Container(
