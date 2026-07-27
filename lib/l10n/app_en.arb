@@ -39,6 +39,7 @@
 
   "faceCaptureTitle": "Position your face",
   "faceCaptureHoldSteady": "Hold still…",
+  "faceCaptureTakePhoto": "Take photo",
   "faceCameraPermissionDenied": "Camera permission is required to capture.",
   "faceCameraError": "Couldn't start the camera.",
   "faceCaptureRetry": "Try again",

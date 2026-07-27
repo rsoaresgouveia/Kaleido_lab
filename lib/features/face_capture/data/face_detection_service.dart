@@ -67,10 +67,10 @@ class FaceDetectionService {
   /// Runs the same rules against a still image on disk (the "analyze a photo"
   /// mode, which needs no camera).
   Future<FaceSample> analyzeImageFile(String path) async {
-    final faces = await _detector.processImage(InputImage.fromFilePath(path));
     final bytes = await File(path).readAsBytes();
     final decoded = await decodeImageFromList(bytes);
     final luminance = await _luminanceFromImage(decoded);
+    final faces = await _detectInImage(decoded, fallbackPath: path);
     final sample = _toSample(
       faces,
       decoded.width.toDouble(),
@@ -79,6 +79,39 @@ class FaceDetectionService {
     );
     decoded.dispose();
     return sample;
+  }
+
+  /// Detects faces on an orientation-normalized copy of [image].
+  ///
+  /// Front-camera JPEGs carry an EXIF orientation that ML Kit's `fromFilePath`
+  /// does not apply on iOS, so the face comes in rotated and goes undetected.
+  /// Flutter's decoder already bakes the orientation into [image]; re-encoding
+  /// it to a temporary PNG gives ML Kit upright pixels.
+  Future<List<Face>> _detectInImage(
+    ui.Image image, {
+    required String fallbackPath,
+  }) async {
+    try {
+      final png = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (png != null) {
+        final tmp = File(
+          '${Directory.systemTemp.path}/kaleido_mlkit_analyze.png',
+        );
+        await tmp.writeAsBytes(png.buffer.asUint8List(), flush: true);
+        final faces = await _detector.processImage(
+          InputImage.fromFilePath(tmp.path),
+        );
+        try {
+          await tmp.delete();
+        } catch (_) {
+          // Best-effort cleanup.
+        }
+        return faces;
+      }
+    } catch (_) {
+      // Fall back to the original file.
+    }
+    return _detector.processImage(InputImage.fromFilePath(fallbackPath));
   }
 
   void dispose() {
@@ -100,7 +133,8 @@ class FaceDetectionService {
       (a, b) => _area(a.boundingBox) >= _area(b.boundingBox) ? a : b,
     );
     final box = face.boundingBox;
-    final widthRatio = imageWidth == 0 ? null : box.width / imageWidth;
+    final hasImage = imageWidth > 0 && imageHeight > 0;
+    final widthRatio = hasImage ? box.width / imageWidth : null;
     final dx = (box.center.dx - imageWidth / 2) / imageWidth;
     final dy = (box.center.dy - imageHeight / 2) / imageWidth;
     final centerOffset = math.sqrt(dx * dx + dy * dy);

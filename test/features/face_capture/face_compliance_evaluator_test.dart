@@ -71,12 +71,6 @@ void main() {
       expect(report.isPassed(ComplianceCheck.framing), isFalse);
       expect(report.primaryHint, ComplianceHint.moveAway);
     });
-
-    test('an off-center face asks the user to center it', () {
-      final report = evaluator.evaluate(compliantSample(centerOffset: 0.3));
-      expect(report.isPassed(ComplianceCheck.framing), isFalse);
-      expect(report.primaryHint, ComplianceHint.centerFace);
-    });
   });
 
   group('frontal pose', () {

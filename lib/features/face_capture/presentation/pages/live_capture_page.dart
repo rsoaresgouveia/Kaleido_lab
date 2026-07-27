@@ -38,6 +38,7 @@ class _LiveCapturePageState extends ConsumerState<LiveCapturePage>
   bool _capturing = false;
   ComplianceReport? _report;
   double _holdProgress = 0;
+  bool _readyToCapture = false;
   Timer? _holdTimer;
 
   @override
@@ -165,11 +166,20 @@ class _LiveCapturePageState extends ConsumerState<LiveCapturePage>
     if (!mounted || _capturing || _controller == null) return;
     final compliant = _report?.isCompliant ?? false;
     if (compliant) {
-      final next = (_holdProgress + _tickMs / _holdMs).clamp(0.0, 1.0);
-      setState(() => _holdProgress = next);
-      if (next >= 1.0) _capture();
-    } else if (_holdProgress != 0) {
-      setState(() => _holdProgress = 0);
+      // Fill the hold ring; once full, offer the manual shutter instead of
+      // capturing automatically.
+      if (_holdProgress < 1.0) {
+        final next = (_holdProgress + _tickMs / _holdMs).clamp(0.0, 1.0);
+        setState(() {
+          _holdProgress = next;
+          if (next >= 1.0) _readyToCapture = true;
+        });
+      }
+    } else if (_holdProgress != 0 || _readyToCapture) {
+      setState(() {
+        _holdProgress = 0;
+        _readyToCapture = false;
+      });
     }
   }
 
@@ -189,6 +199,7 @@ class _LiveCapturePageState extends ConsumerState<LiveCapturePage>
         setState(() {
           _capturing = false;
           _holdProgress = 0;
+          _readyToCapture = false;
           _report = null;
         });
         final controller = _controller;
@@ -272,7 +283,23 @@ class _LiveCapturePageState extends ConsumerState<LiveCapturePage>
             padding: const EdgeInsets.all(24),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: ComplianceHintBanner(message: hint, compliant: compliant),
+              child: _readyToCapture
+                  ? FilledButton.icon(
+                      onPressed: _capture,
+                      icon: const Icon(Icons.camera_alt),
+                      label: Text(l10n.faceCaptureTakePhoto),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 28,
+                          vertical: 16,
+                        ),
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    )
+                  : ComplianceHintBanner(message: hint, compliant: compliant),
             ),
           ),
         ),
