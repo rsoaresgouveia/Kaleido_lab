@@ -13,9 +13,17 @@ import 'compliance_checklist.dart';
 /// the photo, an overall verdict, and the per-check breakdown. Shared by the
 /// live-capture review screen and the "analyze a photo" screen.
 class PhotoComplianceView extends ConsumerStatefulWidget {
-  const PhotoComplianceView({super.key, required this.imagePath});
+  const PhotoComplianceView({
+    super.key,
+    required this.imagePath,
+    this.onReport,
+  });
 
   final String imagePath;
+
+  /// Notified when the still analysis finishes: the strict report, or `null`
+  /// when no face was found. Used by the caller to gate acceptance.
+  final ValueChanged<ComplianceReport?>? onReport;
 
   @override
   ConsumerState<PhotoComplianceView> createState() =>
@@ -43,7 +51,12 @@ class _PhotoComplianceViewState extends ConsumerState<PhotoComplianceView> {
     final sample = await ref
         .read(faceDetectionServiceProvider)
         .analyzeImageFile(widget.imagePath);
-    final report = ref.read(faceComplianceEvaluatorProvider).evaluate(sample);
+    final report = ref.read(stillComplianceEvaluatorProvider).evaluate(sample);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        widget.onReport?.call(sample.faceCount == 0 ? null : report);
+      }
+    });
     return _Analysis(sample, report);
   }
 
