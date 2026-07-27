@@ -11,7 +11,13 @@ final faceDetectionServiceProvider = Provider<FaceDetectionService>((ref) {
   return service;
 });
 
-/// The pure rules engine. Stateless, so a single const instance is shared.
-final faceComplianceEvaluatorProvider = Provider<FaceComplianceEvaluator>(
-  (ref) => const FaceComplianceEvaluator(),
+/// Lenient rules for the live preview (guidance only).
+final liveComplianceEvaluatorProvider = Provider<FaceComplianceEvaluator>(
+  (ref) => const FaceComplianceEvaluator(ComplianceThresholds.live),
+);
+
+/// Strict rules for the captured still — the authoritative gate that decides
+/// whether the photo is good enough to send to the backend.
+final stillComplianceEvaluatorProvider = Provider<FaceComplianceEvaluator>(
+  (ref) => const FaceComplianceEvaluator(ComplianceThresholds.still),
 );

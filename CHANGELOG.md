@@ -4,6 +4,17 @@ All notable changes to this project are documented in this file. The format is
 based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-07-27
+
+### Changed
+
+- Compliance is now decided on the **captured still**, not the live camera frame.
+  The live preview uses lenient, rotation-invariant checks to guide the user
+  (positional centering disabled — camera-stream coordinates are device-specific);
+  the captured photo is re-checked with strict rules whose coordinates are
+  reliable on every device. Acceptance ("Use this photo") is gated on that
+  still result. This makes the accept/reject decision device-agnostic.
+
 ## [0.2.4] - 2026-07-27
 
 ### Added
@@ -87,6 +98,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Gallery home screen (empty, ready to host feature demos).
 - Unit and widget tests, plus a GitHub Actions CI workflow.
 
+[0.3.0]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.3.0
 [0.2.4]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.4
 [0.2.3]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.3
 [0.2.2]: https://github.com/rsoaresgouveia/Kaleido_lab/releases/tag/v0.2.2

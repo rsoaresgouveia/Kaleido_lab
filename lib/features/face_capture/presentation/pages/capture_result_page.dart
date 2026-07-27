@@ -3,14 +3,25 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/routes.dart';
 import '../../../../core/localization/l10n_extensions.dart';
+import '../../domain/entities/compliance.dart';
 import '../widgets/photo_compliance_view.dart';
 
-/// Shows the freshly captured photo re-checked against the rules, with the
-/// option to retake (back to the camera) or confirm.
-class CaptureResultPage extends StatelessWidget {
+/// Reviews the freshly captured photo. The photo is re-checked with the strict
+/// still rules (the authoritative, device-agnostic gate), and can only be
+/// accepted — i.e. sent onward to the backend — once it complies.
+class CaptureResultPage extends StatefulWidget {
   const CaptureResultPage({super.key, required this.imagePath});
 
   final String imagePath;
+
+  @override
+  State<CaptureResultPage> createState() => _CaptureResultPageState();
+}
+
+class _CaptureResultPageState extends State<CaptureResultPage> {
+  ComplianceReport? _report;
+
+  bool get _compliant => _report?.isCompliant ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +29,10 @@ class CaptureResultPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.resultTitle)),
-      body: PhotoComplianceView(imagePath: imagePath),
+      body: PhotoComplianceView(
+        imagePath: widget.imagePath,
+        onReport: (report) => setState(() => _report = report),
+      ),
       persistentFooterButtons: [
         Row(
           children: [
@@ -32,12 +46,15 @@ class CaptureResultPage extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: FilledButton.icon(
-                onPressed: () {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(l10n.resultConfirmed)));
-                  context.goNamed(Routes.homeName);
-                },
+                // Enabled only when the still passes the strict gate.
+                onPressed: _compliant
+                    ? () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.resultConfirmed)),
+                        );
+                        context.goNamed(Routes.homeName);
+                      }
+                    : null,
                 icon: const Icon(Icons.check),
                 label: Text(l10n.resultConfirm),
               ),

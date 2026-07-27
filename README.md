@@ -123,10 +123,9 @@ flutter test
 ## Feature study: face capture
 
 A guided flow that produces an ID-style portrait and checks it on-device with
-ML Kit face detection. It has three screens — a **guide**, a **live camera**
-with an animated alignment frame that turns green and auto-captures after a
-short hold, and a **review** of the result. A camera-free **"analyze a photo"**
-mode runs the same rules on an image from the gallery.
+ML Kit face detection. It has three screens — a **guide**, a **live camera** with
+an alignment oval and a manual shutter, and a **review** of the result. A
+camera-free **"analyze a photo"** mode runs the same rules on a gallery image.
 
 Rules evaluated by the pure `FaceComplianceEvaluator` (fully unit-tested):
 
@@ -139,11 +138,24 @@ Rules evaluated by the pure `FaceComplianceEvaluator` (fully unit-tested):
 | Neutral expression | smiling probability |
 | Lighting | average frame luminance |
 
+### Live guidance vs. the still gate
+
+The **decision is made on the captured still**, not the live preview. Mapping
+ML Kit's camera-stream coordinates to the screen is device-specific (sensor
+orientation, resolution, mirroring, crop), so the live preview uses only the
+**lenient**, rotation-invariant checks (`ComplianceThresholds.live`) to *guide*
+the user — positional centering is disabled there. The captured photo is then
+re-analyzed with the **strict**, authoritative rules (`ComplianceThresholds.still`);
+because a saved image is upright, its coordinates are reliable on every device.
+Only a photo that passes the still gate can be accepted. This split is what makes
+the acceptance decision **device-agnostic** and portable.
+
 **Known limitations.** ML Kit does not classify accessories (glasses, hats), so
-"remove accessories" is guidance in the on-screen guide rather than an automated
-check. Lighting is approximated from frame luminance. The **live camera needs a
-physical device** — the iOS Simulator has no camera; use the "analyze a photo"
-mode to exercise the flow without one.
+"remove accessories" is guidance rather than an automated check, and it provides
+no liveness / anti-spoofing (use a dedicated SDK if that is required). Lighting is
+approximated from luminance. The **live camera needs a physical device**. The
+transform used only for the live preview still needs validation across the target
+device matrix.
 
 ## Roadmap
 

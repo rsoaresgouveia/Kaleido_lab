@@ -135,9 +135,15 @@ class FaceDetectionService {
     final box = face.boundingBox;
     final hasImage = imageWidth > 0 && imageHeight > 0;
     final widthRatio = hasImage ? box.width / imageWidth : null;
-    final dx = (box.center.dx - imageWidth / 2) / imageWidth;
-    final dy = (box.center.dy - imageHeight / 2) / imageWidth;
-    final centerOffset = math.sqrt(dx * dx + dy * dy);
+
+    // Distance of the face-box center from the image center. This is reliable on
+    // a still upright image (the authoritative gate); on a live camera frame the
+    // sensor-space coordinates are not, which is why live compliance ignores it.
+    final cx = hasImage ? box.center.dx / imageWidth : 0.5;
+    final cy = hasImage ? box.center.dy / imageHeight : 0.5;
+    final centerOffset = math.sqrt(
+      (cx - 0.5) * (cx - 0.5) + (cy - 0.5) * (cy - 0.5),
+    );
 
     return FaceSample(
       faceCount: faces.length,
