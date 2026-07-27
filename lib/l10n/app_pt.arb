@@ -19,12 +19,12 @@
 
   "faceGuideTitle": "Antes de começar",
   "faceGuideIntro": "Para uma captura válida, siga estas orientações:",
-  "faceGuideFrontal": "Fique de frente para a câmera",
-  "faceGuideNeutral": "Mantenha uma expressão neutra",
-  "faceGuideEyes": "Mantenha os dois olhos abertos",
-  "faceGuideAccessories": "Remova óculos, chapéus e acessórios",
-  "faceGuideLighting": "Procure uma luz uniforme e clara",
-  "faceGuideAccessoriesNote": "Acessórios e iluminação só são detectados em parte — remova os acessórios você mesmo.",
+  "faceGuideDistance": "Fique a cerca de 60 cm da câmera",
+  "faceGuideFrontal": "Centralize o rosto, olhando direto para a câmera",
+  "faceGuideLighting": "Boa iluminação uniforme — sem sombras ou luz forte",
+  "faceGuideBackground": "Fundo claro e neutro, sem outras pessoas",
+  "faceGuideAccessories": "Sem boné, máscara ou óculos escuros",
+  "faceGuideAccessoriesNote": "Óculos de grau são permitidos (sem reflexo). Evite filtros e maquiagem pesada.",
   "faceGuideStartCamera": "Abrir câmera",
   "faceGuideAnalyzePhoto": "Analisar uma foto",
 
