@@ -145,6 +145,16 @@ class FaceDetectionService {
       (cx - 0.5) * (cx - 0.5) + (cy - 0.5) * (cy - 0.5),
     );
 
+    // Smallest gap between the face box and any edge, as a fraction of that side.
+    final margin = hasImage
+        ? [
+            box.left / imageWidth,
+            box.top / imageHeight,
+            (imageWidth - box.right) / imageWidth,
+            (imageHeight - box.bottom) / imageHeight,
+          ].reduce(math.min)
+        : null;
+
     return FaceSample(
       faceCount: faces.length,
       yawDegrees: face.headEulerAngleY,
@@ -155,6 +165,8 @@ class FaceDetectionService {
       rightEyeOpenProbability: face.rightEyeOpenProbability,
       faceWidthRatio: widthRatio,
       faceCenterOffset: centerOffset,
+      faceWidthPx: box.width,
+      faceMargin: margin,
       luminance: luminance,
     );
   }

@@ -28,12 +28,12 @@
 
   "faceGuideTitle": "Before you start",
   "faceGuideIntro": "For a valid capture, follow these guidelines:",
-  "faceGuideFrontal": "Face the camera straight on",
-  "faceGuideNeutral": "Keep a neutral expression",
-  "faceGuideEyes": "Keep both eyes open",
-  "faceGuideAccessories": "Remove glasses, hats and accessories",
-  "faceGuideLighting": "Find even, bright lighting",
-  "faceGuideAccessoriesNote": "Accessories and lighting can only be partly detected — please remove accessories yourself.",
+  "faceGuideDistance": "Stay about 60 cm from the camera",
+  "faceGuideFrontal": "Center your face, looking straight at the camera",
+  "faceGuideLighting": "Even, good lighting — no shadows or harsh light",
+  "faceGuideBackground": "Plain, light background, no one else in frame",
+  "faceGuideAccessories": "No cap, mask or sunglasses",
+  "faceGuideAccessoriesNote": "Prescription glasses are fine (no glare). Avoid filters and heavy makeup.",
   "faceGuideStartCamera": "Open camera",
   "faceGuideAnalyzePhoto": "Analyze a photo instead",
 
