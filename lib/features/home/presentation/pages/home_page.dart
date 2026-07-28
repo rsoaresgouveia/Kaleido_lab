@@ -5,7 +5,7 @@ import '../../../../app/router/routes.dart';
 import '../../../../core/localization/l10n_extensions.dart';
 import '../feature_catalog.dart';
 
-/// The gallery entry point: a list of the available feature demos. Falls back to
+/// The gallery entry point: a grid of the available feature demos. Falls back to
 /// an empty state when no features are registered yet.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,19 +27,24 @@ class HomePage extends StatelessWidget {
       ),
       body: featureCatalog.isEmpty
           ? _EmptyState(l10n: l10n)
-          : ListView.separated(
+          : GridView.builder(
               padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 1,
+              ),
               itemCount: featureCatalog.length,
-              separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) =>
-                  _FeatureCard(entry: featureCatalog[index]),
+                  _FeatureTile(entry: featureCatalog[index]),
             ),
     );
   }
 }
 
-class _FeatureCard extends StatelessWidget {
-  const _FeatureCard({required this.entry});
+class _FeatureTile extends StatelessWidget {
+  const _FeatureTile({required this.entry});
 
   final FeatureEntry entry;
 
@@ -50,17 +55,35 @@ class _FeatureCard extends StatelessWidget {
 
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: CircleAvatar(
-          radius: 24,
-          backgroundColor: scheme.primaryContainer,
-          child: Icon(entry.icon, color: scheme.onPrimaryContainer),
-        ),
-        title: Text(entry.title(l10n)),
-        subtitle: Text(entry.subtitle(l10n)),
-        trailing: const Icon(Icons.chevron_right),
+      child: InkWell(
         onTap: () => context.pushNamed(entry.routeName),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 32,
+                backgroundColor: scheme.primaryContainer,
+                child: Icon(
+                  entry.icon,
+                  size: 32,
+                  color: scheme.onPrimaryContainer,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                entry.title(l10n),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
